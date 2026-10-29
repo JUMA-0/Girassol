@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girassol Invest - Plataforma de Investimentos</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between text-xs md:text-sm">
+
+    <!-- HEADER / NAVEGAÇÃO DESTACADA -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-2.5 py-2.5 flex justify-between items-center gap-1">
+            <div class="flex items-center space-x-1.5 shrink-0">
+                <div class="bg-emerald-500 text-slate-950 p-1.5 rounded-lg font-bold text-xs shadow"><i class="fa-solid fa-chart-line"></i></div>
+                <span class="text-xs sm:text-base font-black tracking-wider bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">Girassol</span>
+            </div>
+
+            <!-- SALDO RÁPIDO NO CABEÇALHO -->
+            <div id="headerBalances" class="hidden items-center shrink-0">
+                <div class="bg-slate-950 border border-emerald-500/50 px-2.5 py-1.5 rounded-xl flex items-center space-x-1.5 shadow-lg shadow-emerald-500/10">
+                    <i class="fa-solid fa-wallet text-emerald-400 text-xs"></i>
+                    <span class="font-black text-white text-[11px] sm:text-sm"><span id="headerUserBalance">0.00</span> <span class="text-emerald-400 text-[9px] sm:text-xs">MT</span></span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-1.5 shrink-0">
+                <div id="headerActionButtons" class="hidden flex items-center space-x-1.5">
+                    <button onclick="openGamesModal()" class="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 text-[11px] sm:text-sm font-black px-2.5 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer shadow-lg shadow-amber-500/30 ring-2 ring-amber-400/50 animate-pulse">
+                        <i class="fa-solid fa-gamepad text-xs sm:text-base"></i>
+                        <span>Jogos</span>
+                    </button>
+                    <button onclick="openAccountModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] sm:text-sm font-extrabold px-2.5 py-1.5 rounded-xl transition flex items-center space-x-1 cursor-pointer shadow-lg shadow-emerald-600/30 ring-2 ring-emerald-500/40">
+                        <i class="fa-solid fa-user-circle text-xs sm:text-base"></i>
+                        <span class="hidden xs:inline">Conta</span>
+                    </button>
+                </div>
+
+                <!-- Menu de Três Pontos -->
+                <div class="relative">
+                    <button onclick="toggleTopMenu()" class="text-white hover:text-emerald-400 bg-slate-800 hover:bg-slate-700 p-2 rounded-xl transition cursor-pointer text-xs shadow-md ring-1 ring-slate-700">
+                        <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
+                    </button>
+                    
+                    <div id="topDropdownMenu" class="hidden absolute right-0 mt-2 w-56 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl py-2 z-50">
+                        <button onclick="openChatModal()" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-200 hover:bg-slate-800 hover:text-white flex items-center transition cursor-pointer font-semibold">
+                            <i class="fa-solid fa-comments text-emerald-400 mr-3 w-5 text-base"></i> Conversa / Suporte
+                        </button>
+                        <button onclick="openPrivacyModal()" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-200 hover:bg-slate-800 hover:text-white flex items-center transition cursor-pointer font-semibold">
+                            <i class="fa-solid fa-shield-halved text-cyan-400 mr-3 w-5 text-base"></i> Política de Privacidade
+                        </button>
+                        <button onclick="openAdminLoginModal()" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-200 hover:bg-slate-800 hover:text-white flex items-center transition cursor-pointer border-t border-slate-800 mt-1 pt-2.5 font-semibold">
+                            <i class="fa-solid fa-gear text-purple-400 mr-3 w-5 text-base"></i> Área Administrativa
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-3 py-3 w-full flex-grow space-y-3">
+
+        <!-- BANNER -->
+        <div class="relative rounded-xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900">
+            <img src="1000006076.jpg" alt="Equipa Girassol Invest" class="w-full h-36 sm:h-56 object-cover opacity-85 hover:opacity-100 transition duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent flex flex-col justify-end p-3 sm:p-5">
+                <span class="bg-emerald-500 text-slate-950 text-[9px] font-extrabold px-2 py-0.5 rounded-full w-max uppercase tracking-wider mb-1 shadow">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> Plataforma Oficial Moçambique
+                </span>
+                <h2 class="text-sm sm:text-lg font-extrabold text-white">Invista com Segurança e Rentabilidade Diária</h2>
+                <p class="text-[10px] sm:text-xs text-slate-300 max-w-xl">Aproveite os nossos planos estruturados por especialistas e multiplique o seu capital com total transparência.</p>
+            </div>
+        </div>
+
+        <!-- SEÇÃO 1: AUTENTICAÇÃO -->
+        <section id="authSection" class="max-w-sm mx-auto bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-xl mt-4">
+            <div class="text-center mb-3">
+                <h1 id="authTitle" class="text-lg font-bold text-white mb-1">Entrar na Girassol Invest</h1>
+                <p id="authSubtitle" class="text-[11px] text-slate-400">Insira as suas credenciais para aceder.</p>
+            </div>
+            
+            <form onsubmit="handleAuth(event)" class="space-y-2.5">
+                <div id="nameFieldContainer" class="hidden">
+                    <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Nome Completo</label>
+                    <input type="text" id="nameInput" placeholder="O seu nome"
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Telemóvel (9 dígitos)</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">+258</span>
+                        <input type="tel" id="phoneInput" placeholder="84XXXXXXX" maxlength="9" pattern="[8][2,4,5,6,7][0-9]{7}" required
+                            class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-14 pr-3 text-white text-xs focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-semibold text-slate-400 uppercase mb-1">Palavra-passe (Min. 6 dígitos)</label>
+                    <input type="password" id="passInput" placeholder="******" minlength="6" required
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500 transition">
+                </div>
+                <button type="submit" id="authBtn" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 rounded-lg text-xs transition shadow-md shadow-emerald-500/20 cursor-pointer">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="mt-3 text-center">
+                <button onclick="toggleAuthMode()" id="toggleAuthBtn" class="text-[11px] text-emerald-400 hover:underline cursor-pointer bg-transparent border-none">
+                    Não tem conta? Registe-se aqui
+                </button>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: PAINEL DO USUÁRIO -->
+        <section id="userDashboard" class="hidden space-y-3">
+            
+            <!-- TABELA DE PLANOS DE INVESTIMENTO -->
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2">
+                <div class="flex justify-between items-center">
+                    <span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-chart-line mr-1"></i> Planos de Investimento Disponíveis
+                    </span>
+                </div>
+                <div class="overflow-x-auto border border-slate-800 rounded-lg">
+                    <table class="w-full text-left border-collapse text-[10px] sm:text-[11px]">
+                        <thead class="bg-slate-950 text-slate-400 uppercase text-[9px] tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="p-1.5 font-semibold border-r border-slate-800/60">Plano</th>
+                                <th class="p-1.5 font-semibold border-r border-slate-800/60">Mín</th>
+                                <th class="p-1.5 font-semibold border-r border-slate-800/60">Dias</th>
+                                <th class="p-1.5 font-semibold border-r border-slate-800/60">Lucro/dia</th>
+                                <th class="p-1.5 font-semibold text-emerald-400">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="investmentTableBody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- GALERIA DE FOTOS (RECOMPENSA DE LIKES) -->
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2.5">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5">
+                    <div>
+                        <span class="bg-rose-500/10 text-rose-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-heart mr-1"></i> Recompensas Diárias por Like
+                        </span>
+                        <h2 class="text-xs sm:text-sm font-bold text-white mt-0.5">Dê Like nas Fotos e Ganhe Bônus Diário</h2>
+                    </div>
+                    <div class="bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800 text-[11px]">
+                        Likes Hoje: <strong id="likesCountDisplay" class="text-rose-400">0</strong> / 10
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5" id="photoGalleryGrid"></div>
+            </div>
+
+            <!-- LINK DE CONVITE -->
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                <div>
+                    <h2 class="text-xs sm:text-sm font-bold flex items-center text-white"><i class="fa-solid fa-share-nodes text-amber-400 mr-2"></i> Indique & Ganhe Bônus</h2>
+                    <p class="text-[10px] text-slate-400">Partilhe o seu link com amigos e ganhe 50 MT por cada registo.</p>
+                </div>
+                <div class="flex items-center space-x-1.5 w-full sm:w-auto">
+                    <input type="text" id="refLink" readonly class="bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2.5 text-slate-300 text-[10px] focus:outline-none w-full sm:w-56">
+                    <button onclick="copyRefLink()" class="bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-2.5 py-1.5 rounded-lg transition text-xs cursor-pointer"><i class="fa-solid fa-copy"></i></button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SEÇÃO 3: PAINEL DE ADMINISTRAÇÃO -->
+        <section id="adminDashboard" class="hidden space-y-3">
+            <div class="bg-rose-950/30 border border-rose-900/50 p-2.5 rounded-xl flex justify-between items-center text-xs">
+                <div>
+                    <h2 class="font-bold text-rose-400"><i class="fa-solid fa-shield-halved mr-1"></i> Painel do Administrador</h2>
+                    <p class="text-[10px] text-slate-400">Gestão completa de contas, planos, depósitos, levantamentos e controlo da Roleta e Plinko.</p>
+                </div>
+                <button onclick="logoutToHome()" class="bg-rose-500/20 text-rose-400 hover:bg-rose-500/30 text-[10px] px-2.5 py-1 rounded-full font-semibold border border-rose-500/30 cursor-pointer">Sair</button>
+            </div>
+
+            <!-- GESTÃO ADMIN -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                
+                <!-- GESTÃO DE NÚMEROS DE DEPÓSITO -->
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2 md:col-span-2">
+                    <h3 class="text-xs font-bold text-white"><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> Configuração dos Números Oficiais de Depósito (M-Pesa / e-Mola)</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Número M-Pesa</label>
+                            <input type="text" id="adminMpesaInput" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Número e-Mola</label>
+                            <input type="text" id="adminEmolaInput" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+                    <button onclick="saveAdminDepositNumbers()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-1.5 px-3 rounded-lg text-xs cursor-pointer">Guardar Números</button>
+                </div>
+
+                <!-- GESTÃO DE PLANOS DE INVESTIMENTO -->
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2 md:col-span-2">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-bold text-white"><i class="fa-solid fa-chart-line text-emerald-400 mr-1.5"></i> Controlo Total da Tabela de Investimentos</h3>
+                        <button onclick="openAddPlanModal()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold cursor-pointer"><i class="fa-solid fa-plus mr-1"></i> Adicionar Novo Plano</button>
+                    </div>
+                    <div class="overflow-x-auto border border-slate-800 rounded-lg">
+                        <table class="w-full text-left border-collapse text-[10px]">
+                            <thead class="bg-slate-950 text-slate-400 uppercase text-[9px] border-b border-slate-800">
+                                <tr>
+                                    <th class="p-1.5">Nome</th>
+                                    <th class="p-1.5">Mín (MT)</th>
+                                    <th class="p-1.5">Dias</th>
+                                    <th class="p-1.5">Lucro/dia</th>
+                                    <th class="p-1.5">Total (MT)</th>
+                                    <th class="p-1.5 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminPlansTableBody" class="divide-y divide-slate-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2">
+                    <h3 class="text-xs font-bold text-white"><i class="fa-solid fa-users text-purple-400 mr-1.5"></i> Gestão Geral de Contas</h3>
+                    <div class="max-h-52 overflow-y-auto space-y-1.5 text-[11px]" id="adminUsersList"></div>
+                </div>
+                
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2">
+                    <h3 class="text-xs font-bold text-white"><i class="fa-solid fa-gamepad text-amber-400 mr-1.5"></i> Controlo Avançado dos Jogos</h3>
+                    <div class="space-y-3 text-[11px]">
+                        <div>
+                            <p class="text-slate-400 mb-1">Modo do Plinko:</p>
+                            <select id="adminPlinkoMode" onchange="updateAdminPlinkoSetting()" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 text-white text-xs">
+                                <option value="sequence">Sequência Padrão</option>
+                                <option value="random">Aleatório (Normal)</option>
+                                <option value="5">Forçar Vitória (Sempre 5x)</option>
+                                <option value="0.1">Forçar Perda (Sempre 0.1x)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 mb-1">Controlo de Ganhos / Modo Roleta:</p>
+                            <select id="adminWheelMode" onchange="updateAdminWheelSetting()" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 text-white text-xs">
+                                <option value="sequence">Sequência Equilibrada</option>
+                                <option value="random">Aleatório</option>
+                                <option value="big">Forçar Prémios Maiores</option>
+                                <option value="loss">Forçar Perdas (Boa sorte)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2">
+                    <h3 class="text-xs font-bold text-white"><i class="fa-solid fa-wallet text-emerald-400 mr-1.5"></i> Depósitos Pendentes</h3>
+                    <div class="max-h-52 overflow-y-auto space-y-1.5 text-[11px]" id="adminDepositList"></div>
+                </div>
+                
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl space-y-2">
+                    <h3 class="text-xs font-bold text-white"><i class="fa-solid fa-money-bill-wave text-cyan-400 mr-1.5"></i> Levantamentos Pendentes</h3>
+                    <div class="max-h-52 overflow-y-auto space-y-1.5 text-[11px]" id="adminWithdrawList"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAIS -->
+
+    <!-- Modal Adicionar / Editar Plano (Admin) -->
+    <div id="planModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl space-y-2.5">
+            <h3 id="planModalTitle" class="text-xs font-bold text-white flex items-center"><i class="fa-solid fa-chart-line text-emerald-400 mr-2"></i> Adicionar Plano de Investimento</h3>
+            <input type="hidden" id="editPlanId">
+            <div class="space-y-2 text-[11px]">
+                <div>
+                    <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Nome do Plano</label>
+                    <input type="text" id="planNameInput" placeholder="Ex: Bronze VIP" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Mínimo (MT)</label>
+                        <input type="number" id="planMinInput" placeholder="200" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Duração (Dias)</label>
+                        <input type="text" id="planDurationInput" placeholder="3 Dias" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Lucro por Dia (MT)</label>
+                        <input type="number" id="planDailyInput" placeholder="20" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-[9px] text-slate-400 uppercase font-semibold mb-1">Total Retorno (MT)</label>
+                        <input type="number" id="planTotalInput" placeholder="260" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+            </div>
+            <div class="flex space-x-2 pt-1">
+                <button onclick="saveInvestmentPlan()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Salvar Plano</button>
+                <button onclick="closePlanModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Minha Conta -->
+    <div id="accountModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md p-4 rounded-2xl shadow-2xl relative space-y-3">
+            <button onclick="closeAccountModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+
+            <div class="flex items-center space-x-2.5 border-b border-slate-800 pb-2.5">
+                <div class="bg-emerald-500/10 text-emerald-400 p-2.5 rounded-xl text-base"><i class="fa-solid fa-user-tie"></i></div>
+                <div>
+                    <h3 id="accNameDisplay" class="text-xs font-bold text-white">Nome do Usuário</h3>
+                    <p id="accPhoneDisplay" class="text-[10px] text-slate-400">+258 84XXXXXXX</p>
+                </div>
+            </div>
+
+            <!-- Saldos Detalhados -->
+            <div class="grid grid-cols-2 gap-2">
+                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <p class="text-[9px] text-slate-400 uppercase font-semibold flex items-center justify-between">
+                        <span>Principal</span>
+                        <i class="fa-solid fa-wallet text-emerald-400"></i>
+                    </p>
+                    <h4 class="text-sm font-extrabold text-white mt-1"><span id="accBalance">0.00</span> <span class="text-emerald-400 text-[10px]">MT</span></h4>
+                </div>
+                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <p class="text-[9px] text-slate-400 uppercase font-semibold flex items-center justify-between">
+                        <span>Depósito</span>
+                        <i class="fa-solid fa-arrow-down text-cyan-400"></i>
+                    </p>
+                    <h4 class="text-sm font-extrabold text-white mt-1"><span id="accDepositBalance">0.00</span> <span class="text-cyan-400 text-[10px]">MT</span></h4>
+                </div>
+                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <p class="text-[9px] text-slate-400 uppercase font-semibold flex items-center justify-between">
+                        <span>Ganhos Diários</span>
+                        <i class="fa-solid fa-chart-line text-amber-400"></i>
+                    </p>
+                    <h4 class="text-sm font-extrabold text-emerald-400 mt-1">+<span id="accDailyProfit">0.00</span> <span class="text-[10px]">MT</span></h4>
+                </div>
+                <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                    <p class="text-[9px] text-slate-400 uppercase font-semibold flex items-center justify-between">
+                        <span>Ganhos Mensais</span>
+                        <i class="fa-solid fa-calendar-days text-purple-400"></i>
+                    </p>
+                    <h4 class="text-sm font-extrabold text-cyan-400 mt-1">+<span id="accMonthlyProfit">0.00</span> <span class="text-[10px]">MT</span></h4>
+                </div>
+            </div>
+
+            <!-- Ações -->
+            <div class="space-y-1.5 pt-1">
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="closeAccountModal(); openDepositModal();" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer flex items-center justify-center space-x-1">
+                        <i class="fa-solid fa-wallet"></i> <span>Depositar</span>
+                    </button>
+                    <button onclick="closeAccountModal(); openWithdrawModal();" class="bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-2 rounded-lg text-xs cursor-pointer flex items-center justify-center space-x-1">
+                        <i class="fa-solid fa-money-bill-wave"></i> <span>Levantar</span>
+                    </button>
+                </div>
+                <button onclick="closeAccountModal(); openHistoryModal();" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-2 rounded-lg text-xs cursor-pointer flex items-center justify-center space-x-1.5">
+                    <i class="fa-solid fa-clock-rotate-left text-amber-400"></i> <span>Ver Histórico Completo</span>
+                </button>
+                <button onclick="logout()" class="w-full bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 font-bold py-1.5 rounded-lg text-xs cursor-pointer flex items-center justify-center space-x-1.5 border border-rose-500/30">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span>Terminar Sessão (Sair)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Seleção de Jogos -->
+    <div id="gamesModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md p-4 rounded-2xl shadow-2xl relative space-y-3">
+            <button onclick="closeGamesModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+
+            <div class="flex items-center space-x-2.5 border-b border-slate-800 pb-2.5">
+                <div class="bg-amber-500/10 text-amber-400 p-2.5 rounded-xl text-base"><i class="fa-solid fa-gamepad"></i></div>
+                <div>
+                    <h3 class="text-xs font-bold text-white">Centro de Jogos Girassol</h3>
+                    <p class="text-[10px] text-slate-400">Escolha o seu jogo favorito para apostar e ganhar</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-2.5">
+                <button onclick="closeGamesModal(); openPlinkoModal();" class="bg-slate-950 hover:bg-slate-800 border border-slate-800 p-3 rounded-xl flex items-center space-x-3 transition cursor-pointer text-left">
+                    <div class="bg-amber-500/20 text-amber-400 p-2.5 rounded-lg text-base"><i class="fa-solid fa-circle-dot"></i></div>
+                    <div>
+                        <h4 class="text-xs font-bold text-white">Plinko Girassol</h4>
+                        <p class="text-[10px] text-slate-400">Deixe a bola cair, acerte a probabilidade e multiplique o seu saldo.</p>
+                    </div>
+                </button>
+
+                <button onclick="closeGamesModal(); openLuckyWheelModal();" class="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 p-3 rounded-xl flex items-center space-x-3 transition cursor-pointer text-left">
+                    <div class="bg-emerald-500/20 text-emerald-400 p-2.5 rounded-lg text-base"><i class="fa-solid fa-dharmachakra"></i></div>
+                    <div>
+                        <h4 class="text-xs font-bold text-white">Roleta da Sorte</h4>
+                        <p class="text-[10px] text-slate-400">Gire a roleta por 10 MT e ganhe prémios incríveis instantaneamente!</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Plinko Girassol -->
+    <div id="plinkoModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-gradient-to-br from-slate-900 via-purple-950/30 to-slate-950 border border-slate-800 w-full max-w-lg p-4 rounded-2xl shadow-2xl relative space-y-3">
+            <button onclick="closePlinkoModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+                <div class="space-y-2 text-center md:text-left flex-1">
+                    <span class="bg-amber-500/10 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider border border-amber-500/20">
+                        <i class="fa-solid fa-gamepad mr-1"></i> Plinko Girassol
+                    </span>
+                    <h3 class="text-sm font-extrabold text-white">Multiplique o seu Saldo Principal!</h3>
+                    <p class="text-[10px] text-slate-400">Aposte entre <strong class="text-white">5 MT</strong> e <strong class="text-white">500 MT</strong>!</p>
+                    
+                    <div class="space-y-1">
+                        <label class="block text-[9px] font-semibold text-slate-300 uppercase">Valor da Aposta (MT)</label>
+                        <div class="flex items-center space-x-1">
+                            <input type="number" id="plinkoBetInput" min="5" max="500" value="50" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-2 text-white text-xs focus:outline-none focus:border-amber-500">
+                            <button onclick="setPlinkoBet(5)" class="bg-slate-800 hover:bg-slate-700 text-[9px] px-2 py-1.5 rounded font-bold">5</button>
+                            <button onclick="setPlinkoBet(50)" class="bg-slate-800 hover:bg-slate-700 text-[9px] px-2 py-1.5 rounded font-bold">50</button>
+                        </div>
+                    </div>
+
+                    <button id="plinkoBtn" onclick="playPlinko()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2 px-3 rounded-lg text-xs transition shadow-md shadow-amber-500/20 cursor-pointer flex items-center justify-center space-x-1">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Lançar Bola</span>
+                    </button>
+                    <div id="plinkoResultMsg" class="text-[10px] font-bold min-h-[16px]"></div>
+                </div>
+
+                <div class="bg-slate-950/90 p-2 rounded-xl border border-slate-800 flex flex-col items-center shadow-xl">
+                    <canvas id="plinkoCanvas" width="240" height="340" class="rounded-lg bg-slate-950 border border-slate-800"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Roleta da Sorte -->
+    <div id="luckyWheelModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-gradient-to-br from-slate-900 via-emerald-950/30 to-slate-950 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl relative space-y-3">
+            <button onclick="closeLuckyWheelModal()" class="absolute top-3 right-3 text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 p-1.5 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-xmark text-xs"></i>
+            </button>
+            
+            <div class="text-center space-y-1">
+                <span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider border border-emerald-500/20">
+                    <i class="fa-solid fa-dharmachakra mr-1"></i> Roleta da Sorte
+                </span>
+                <h3 class="text-sm font-extrabold text-white">Gire e Ganhe Prémios Exclusivos!</h3>
+                <p class="text-[10px] text-slate-400">Cada rodada custa exatamente <strong class="text-white">10 MT</strong> do seu saldo principal.</p>
+            </div>
+
+            <div class="bg-slate-950/90 p-2 rounded-xl border border-slate-800 flex flex-col items-center shadow-xl relative">
+                <canvas id="wheelCanvas" width="220" height="220" class="rounded-full bg-slate-950 border border-slate-800 shadow-lg"></canvas>
+                <div class="absolute top-1 transform -translate-y-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[12px] border-t-amber-400 z-10"></div>
+            </div>
+
+            <button id="wheelSpinBtn" onclick="spinLuckyWheel()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 px-3 rounded-lg text-xs transition shadow-md shadow-emerald-500/20 cursor-pointer flex items-center justify-center space-x-1">
+                <i class="fa-solid fa-play"></i>
+                <span>Girar Roleta (10 MT)</span>
+            </button>
+            <div id="wheelResultMsg" class="text-[10px] font-bold text-center min-h-[16px]"></div>
+        </div>
+    </div>
+
+    <!-- Modal Histórico -->
+    <div id="historyModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-xl p-4 rounded-2xl shadow-2xl space-y-3 max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h3 class="text-xs font-bold text-white flex items-center"><i class="fa-solid fa-clock-rotate-left text-amber-400 mr-2"></i> Histórico Completo</h3>
+                <button onclick="closeHistoryModal()" class="text-slate-400 hover:text-white bg-slate-800 p-1.5 rounded-full w-6 h-6 flex items-center justify-center cursor-pointer">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 overflow-y-auto flex-grow pr-1 text-[11px]">
+                <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-1.5">
+                    <h4 class="font-bold text-emerald-400 flex items-center"><i class="fa-solid fa-wallet mr-1"></i> Depósitos</h4>
+                    <div class="max-h-44 overflow-y-auto space-y-1" id="userDepositHistory"></div>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-1.5">
+                    <h4 class="font-bold text-cyan-400 flex items-center"><i class="fa-solid fa-money-bill-wave mr-1"></i> Levantamentos</h4>
+                    <div class="max-h-44 overflow-y-auto space-y-1" id="userWithdrawHistory"></div>
+                </div>
+                <div class="bg-slate-950 border border-slate-800 p-2.5 rounded-xl space-y-1.5">
+                    <h4 class="font-bold text-amber-400 flex items-center"><i class="fa-solid fa-chart-line mr-1"></i> Extrato</h4>
+                    <div class="max-h-44 overflow-y-auto space-y-1" id="userEarningsHistory"></div>
+                </div>
+            </div>
+
+            <button onclick="closeHistoryModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal Depósito Atualizado -->
+    <div id="depositModal" class="hidden fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl space-y-3">
+            <h3 class="text-xs sm:text-sm font-bold text-white flex items-center"><i class="fa-solid fa-wallet text-emerald-400 mr-2"></i> Depositar Fundos (M-Pesa / e-Mola)</h3>
+            
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                <p class="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed">
+                    Para efetuar o seu depósito, transfira o valor pretendido para um dos nossos números oficiais abaixo e cole o código/ID da transação:
+                </p>
+                <div class="space-y-1.5 pt-1">
+                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-800">
+                        <span class="text-xs text-white font-bold"><i class="fa-solid fa-mobile-screen text-emerald-400 mr-1.5"></i> M-Pesa: <span id="displayMpesaNum" class="text-emerald-400">841234567</span></span>
+                        <button onclick="copyDepositNumber('displayMpesaNum')" class="bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer transition">Copiar</button>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded-lg border border-slate-800">
+                        <span class="text-xs text-white font-bold"><i class="fa-solid fa-mobile-screen text-cyan-400 mr-1.5"></i> e-Mola: <span id="displayEmolaNum" class="text-cyan-400">821234567</span></span>
+                        <button onclick="copyDepositNumber('displayEmolaNum')" class="bg-cyan-600/20 hover:bg-cyan-600 text-cyan-300 hover:text-white px-2 py-1 rounded text-[10px] font-bold cursor-pointer transition">Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <input type="number" id="depositAmountInput" placeholder="Valor em MT (Ex: 500)" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-2 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+                <input type="text" id="depositTxIdInput" placeholder="ID da Transação / Código M-Pesa/e-Mola" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-2 px-3 text-white text-xs focus:outline-none focus:border-emerald-500">
+            </div>
+            
+            <div class="flex space-x-2 pt-1">
+                <button onclick="submitDeposit()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Confirmar Depósito</button>
+                <button onclick="closeDepositModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Levantamento -->
+    <div id="withdrawModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl space-y-2.5">
+            <h3 class="text-xs font-bold text-white flex items-center"><i class="fa-solid fa-money-bill-wave text-cyan-400 mr-2"></i> Levantar Fundos</h3>
+            <p class="text-[10px] text-slate-400">O levantamento será enviado para o seu telemóvel registado via M-Pesa/e-Mola (Limite de 1 por dia).</p>
+            <div class="space-y-2">
+                <input type="number" id="withdrawAmountInput" placeholder="Valor a levantar (MT)" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-cyan-500">
+            </div>
+            <div class="flex space-x-2 pt-1">
+                <button onclick="submitWithdraw()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold py-2 rounded-lg text-xs cursor-pointer">Solicitar</button>
+                <button onclick="closeWithdrawModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Admin Login -->
+    <div id="adminLoginModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl space-y-2.5">
+            <h3 class="text-xs font-bold text-white flex items-center"><i class="fa-solid fa-gear text-purple-400 mr-2"></i> Acesso Administrativo</h3>
+            <input type="password" id="adminPasswordInput" placeholder="Palavra-passe de Admin" class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 px-3 text-white text-xs focus:outline-none focus:border-purple-500">
+            <div class="flex space-x-2">
+                <button onclick="loginAsAdmin()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 rounded-lg text-xs cursor-pointer">Entrar</button>
+                <button onclick="closeAdminLoginModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chat / Suporte -->
+    <div id="chatModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl space-y-2.5">
+            <h3 class="text-xs font-bold text-white flex items-center"><i class="fa-solid fa-comments text-emerald-400 mr-2"></i> Suporte Girassol Invest</h3>
+            <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-[10px] text-slate-300 space-y-1.5">
+                <p>Olá! Como podemos ajudar com os seus investimentos ou com os jogos?</p>
+                <p class="text-emerald-400 font-semibold"><i class="fa-brands fa-whatsapp mr-1"></i> WhatsApp de Apoio: +258 84 123 4567</p>
+            </div>
+            <button onclick="closeChatModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Modal Privacidade -->
+    <div id="privacyModal" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-3">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-sm p-4 rounded-2xl shadow-2xl space-y-2.5">
+            <h3 class="text-xs font-bold text-white flex items-center"><i class="fa-solid fa-shield-halved text-cyan-400 mr-2"></i> Política de Privacidade</h3>
+            <p class="text-[10px] text-slate-400 leading-relaxed">A Girassol Invest protege os seus dados pessoais e transações financeiras com encriptação de ponta. Os fundos e prémios dos jogos são garantidos de forma transparente.</p>
+            <button onclick="closePrivacyModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-lg text-xs cursor-pointer">Fechar</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-2.5 text-center text-[10px] text-slate-500">
+        &copy; 2026 Girassol Invest. Todos os direitos reservados. Moçambique.
+    </footer>
+
+    <!-- SCRIPT DA PLATAFORMA -->
+    <script>
+        let currentUser = JSON.parse(localStorage.getItem('girassol_current_user')) || null;
+        let isRegisterMode = false;
+        let adminPlinkoSetting = localStorage.getItem('admin_plinko_setting') || 'sequence';
+        let adminWheelSetting = localStorage.getItem('admin_wheel_setting') || 'sequence';
+        let plinkoSequenceIndex = parseInt(localStorage.getItem('plinko_seq_idx') || '0');
+        
+        let adminDepositNums = JSON.parse(localStorage.getItem('girassol_deposit_nums')) || { mpesa: '841234567', emola: '821234567' };
+
+        // Tabela de planos de investimento
+        let investmentPlans = JSON.parse(localStorage.getItem('girassol_investment_plans')) || [
+            { id: 1, name: 'Bronze Iniciante', min: 200, duration: '3 Dias', daily: 20, total: 260 },
+            { id: 2, name: 'Prata Crescimento', min: 500, duration: '5 Dias', daily: 55, total: 775 },
+            { id: 3, name: 'Ouro Standard', min: 1000, duration: '7 Dias', daily: 120, total: 1840 },
+            { id: 4, name: 'Platina Avançado', min: 2000, duration: '10 Dias', daily: 260, total: 4600 },
+            { id: 5, name: 'Safira Pro', min: 3500, duration: '12 Dias', daily: 480, total: 9260 },
+            { id: 6, name: 'Rubi Premium', min: 5000, duration: '15 Dias', daily: 700, total: 15500 },
+            { id: 7, name: 'Esmeralda Master', min: 8000, duration: '20 Dias', daily: 1200, total: 32000 },
+            { id: 8, name: 'Diamante VIP', min: 15000, duration: '30 Dias', daily: 2500, total: 90000 },
+            { id: 9, name: 'Master Elite', min: 25000, duration: '35 Dias', daily: 4500, total: 182500 },
+            { id: 10, name: 'Girassol Legend', min: 50000, duration: '45 Dias', daily: 9500, total: 477500 }
+        ];
+
+        const galleryPhotos = [
+            { id: 1, url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80' },
+            { id: 2, url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80' },
+            { id: 3, url: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80' },
+            { id: 4, url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
+            { id: 5, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' }
+        ];
+
+        window.onload = function() {
+            checkAuth();
+            renderInvestmentPlans();
+            renderGallery();
+            updateDepositNumbersUI();
+        };
+
+        function updateDepositNumbersUI() {
+            const mElem = document.getElementById('displayMpesaNum');
+            const eElem = document.getElementById('displayEmolaNum');
+            if(mElem) mElem.innerText = adminDepositNums.mpesa;
+            if(eElem) eElem.innerText = adminDepositNums.emola;
+        }
+
+        function copyDepositNumber(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text);
+            alert(`Número ${text} copiado com sucesso!`);
+        }
+
+        function toggleTopMenu() {
+            document.getElementById('topDropdownMenu').classList.toggle('hidden');
+        }
+
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById('authTitle').innerText = isRegisterMode ? 'Criar Conta na Girassol Invest' : 'Entrar na Girassol Invest';
+            document.getElementById('authSubtitle').innerText = isRegisterMode ? 'Preencha os dados para se registar.' : 'Insira as suas credenciais para aceder.';
+            document.getElementById('authBtn').innerText = isRegisterMode ? 'Registar Conta' : 'Entrar';
+            document.getElementById('toggleAuthBtn').innerText = isRegisterMode ? 'Já tem conta? Entre aqui' : 'Não tem conta? Registe-se aqui';
+            
+            const nameContainer = document.getElementById('nameFieldContainer');
+            const nameInput = document.getElementById('nameInput');
+            if(isRegisterMode) {
+                nameContainer.classList.remove('hidden');
+                nameInput.required = true;
+            } else {
+                nameContainer.classList.add('hidden');
+                nameInput.required = false;
+            }
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            const phone = document.getElementById('phoneInput').value.trim();
+            const pass = document.getElementById('passInput').value.trim();
+            const name = document.getElementById('nameInput').value.trim();
+
+            if(phone.length !== 9) {
+                alert('O número de telemóvel deve ter exatamente 9 dígitos.');
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('girassol_users')) || {};
+
+            if(isRegisterMode) {
+                if(users[phone]) {
+                    alert('Este telemóvel já está registado!');
+                    return;
+                }
+                users[phone] = {
+                    name: name || 'Investidor',
+                    phone: phone,
+                    pass: pass,
+                    balance: 100.00,
+                    depositBalance: 0.00,
+                    dailyProfit: 0.00,
+                    monthlyProfit: 0.00,
+                    bonus: 50.00,
+                    likesCount: 0,
+                    lastWithdrawDate: '',
+                    deposits: [],
+                    withdraws: [],
+                    earnings: []
+                };
+                localStorage.setItem('girassol_users', JSON.stringify(users));
+                alert('Registo efetuado com sucesso! Recebeu 100 MT de bónus inicial.');
+            }
+
+            if(!users[phone] || users[phone].pass !== pass) {
+                alert('Telemóvel ou palavra-passe incorretos!');
+                return;
+            }
+
+            currentUser = users[phone];
+            localStorage.setItem('girassol_current_user', JSON.stringify(currentUser));
+            checkAuth();
+        }
+
+        function checkAuth() {
+            if(currentUser) {
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('userDashboard').classList.remove('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                document.getElementById('headerBalances').classList.remove('hidden');
+                document.getElementById('headerBalances').classList.add('flex');
+                document.getElementById('headerActionButtons').classList.remove('hidden');
+                updateUserDataUI();
+            } else {
+                document.getElementById('authSection').classList.remove('hidden');
+                document.getElementById('userDashboard').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                document.getElementById('headerBalances').classList.add('hidden');
+                document.getElementById('headerBalances').classList.remove('flex');
+                document.getElementById('headerActionButtons').classList.add('hidden');
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('girassol_current_user');
+            closeAccountModal();
+            checkAuth();
+        }
+
+        function logoutToHome() {
+            checkAuth();
+        }
+
+        function updateUserDataUI() {
+            if(!currentUser) return;
+            document.getElementById('headerUserBalance').innerText = currentUser.balance.toFixed(2);
+            
+            document.getElementById('accNameDisplay').innerText = currentUser.name || 'Investidor';
+            document.getElementById('accPhoneDisplay').innerText = `+258 ${currentUser.phone}`;
+            document.getElementById('accBalance').innerText = currentUser.balance.toFixed(2);
+            document.getElementById('accDepositBalance').innerText = (currentUser.depositBalance || 0).toFixed(2);
+            document.getElementById('accDailyProfit').innerText = (currentUser.dailyProfit || 0).toFixed(2);
+            document.getElementById('accMonthlyProfit').innerText = (currentUser.monthlyProfit || 0).toFixed(2);
+
+            document.getElementById('likesCountDisplay').innerText = currentUser.likesCount || 0;
+            document.getElementById('refLink').value = `https://girassolinvest.co.mz/ref=${currentUser.phone}`;
+
+            renderUserHistory();
+        }
+
+        function openAccountModal() { updateUserDataUI(); document.getElementById('accountModal').classList.remove('hidden'); }
+        function closeAccountModal() { document.getElementById('accountModal').classList.add('hidden'); }
+
+        function openGamesModal() { document.getElementById('topDropdownMenu').classList.add('hidden'); document.getElementById('gamesModal').classList.remove('hidden'); }
+        function closeGamesModal() { document.getElementById('gamesModal').classList.add('hidden'); }
+
+        function openPlinkoModal() { document.getElementById('plinkoModal').classList.remove('hidden'); setTimeout(initPlinkoCanvas, 100); }
+        function closePlinkoModal() { document.getElementById('plinkoModal').classList.add('hidden'); }
+        
+        function openLuckyWheelModal() { document.getElementById('luckyWheelModal').classList.remove('hidden'); setTimeout(initWheelCanvas, 100); }
+        function closeLuckyWheelModal() { document.getElementById('luckyWheelModal').classList.add('hidden'); }
+
+        function openHistoryModal() { document.getElementById('topDropdownMenu').classList.add('hidden'); document.getElementById('historyModal').classList.remove('hidden'); updateUserDataUI(); }
+        function closeHistoryModal() { document.getElementById('historyModal').classList.add('hidden'); }
+
+        function openDepositModal(defaultAmount = '') { 
+            updateDepositNumbersUI();
+            if(defaultAmount) document.getElementById('depositAmountInput').value = defaultAmount; 
+            document.getElementById('depositModal').classList.remove('hidden'); 
+        }
+        function closeDepositModal() { document.getElementById('depositModal').classList.add('hidden'); }
+        function openWithdrawModal() { document.getElementById('withdrawModal').classList.remove('hidden'); }
+        function closeWithdrawModal() { document.getElementById('withdrawModal').classList.add('hidden'); }
+        function openAdminLoginModal() { document.getElementById('topDropdownMenu').classList.add('hidden'); document.getElementById('adminLoginModal').classList.remove('hidden'); }
+        function closeAdminLoginModal() { document.getElementById('adminLoginModal').classList.add('hidden'); }
+        function openChatModal() { document.getElementById('topDropdownMenu').classList.add('hidden'); document.getElementById('chatModal').classList.remove('hidden'); }
+        function closeChatModal() { document.getElementById('chatModal').classList.add('hidden'); }
+        function openPrivacyModal() { document.getElementById('topDropdownMenu').classList.add('hidden'); document.getElementById('privacyModal').classList.remove('hidden'); }
+        function closePrivacyModal() { document.getElementById('privacyModal').classList.add('hidden'); }
+
+        function loginAsAdmin() {
+            const pass = document.getElementById('adminPasswordInput').value;
+            if(pass === 'admin123') {
+                closeAdminLoginModal();
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('userDashboard').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                document.getElementById('headerBalances').classList.add('hidden');
+                document.getElementById('headerActionButtons').classList.add('hidden');
+                loadAdminData();
+            } else {
+                alert('Palavra-passe de administrador incorreta!');
+            }
+        }
+
+        function submitDeposit() {
+            const amount = parseFloat(document.getElementById('depositAmountInput').value);
+            const txId = document.getElementById('depositTxIdInput').value.trim();
+            if(!amount || amount <= 0 || !txId) {
+                alert('Insira um valor válido e o ID da transação.');
+                return;
+            }
+            const depositItem = { id: Date.now(), amount, txId, status: 'Pendente', date: new Date().toLocaleDateString() };
+            currentUser.deposits.push(depositItem);
+            saveUserData();
+            closeDepositModal();
+            alert('Pedido de depósito submetido com sucesso! Aguarde aprovação.');
+            updateUserDataUI();
+        }
+
+        function submitWithdraw() {
+            const amount = parseFloat(document.getElementById('withdrawAmountInput').value);
+            const todayStr = new Date().toLocaleDateString();
+
+            if(!amount || amount <= 0) {
+                alert('Insira um valor válido para levantamento.');
+                return;
+            }
+            if(currentUser.lastWithdrawDate === todayStr) {
+                alert('Aviso: Só é permitido efetuar 1 pedido de levantamento por dia!');
+                return;
+            }
+            if(amount > currentUser.balance) {
+                alert('Saldo insuficiente para este levantamento.');
+                return;
+            }
+            currentUser.balance -= amount;
+            currentUser.lastWithdrawDate = todayStr;
+            const withdrawItem = { id: Date.now(), amount, status: 'Pendente', date: todayStr };
+            currentUser.withdraws.push(withdrawItem);
+            saveUserData();
+            closeWithdrawModal();
+            alert('Solicitação de levantamento enviada com sucesso!');
+            updateUserDataUI();
+        }
+
+        function saveUserData() {
+            let users = JSON.parse(localStorage.getItem('girassol_users')) || {};
+            users[currentUser.phone] = currentUser;
+            localStorage.setItem('girassol_users', JSON.stringify(users));
+            localStorage.setItem('girassol_current_user', JSON.stringify(currentUser));
+        }
+
+        function renderUserHistory() {
+            const depContainer = document.getElementById('userDepositHistory');
+            if(depContainer) {
+                depContainer.innerHTML = currentUser.deposits.map(d => `<div class="bg-slate-900 p-1.5 rounded flex justify-between"><span>${d.amount} MT (${d.status})</span><span class="text-amber-400">${d.date}</span></div>`).join('') || '<p class="text-slate-500">Sem depósitos.</p>';
+            }
+
+            const witContainer = document.getElementById('userWithdrawHistory');
+            if(witContainer) {
+                witContainer.innerHTML = currentUser.withdraws.map(w => `<div class="bg-slate-900 p-1.5 rounded flex justify-between"><span>${w.amount} MT (${w.status})</span><span class="text-amber-400">${w.date}</span></div>`).join('') || '<p class="text-slate-500">Sem levantamentos.</p>';
+            }
+
+            const earnContainer = document.getElementById('userEarningsHistory');
+            if(earnContainer) {
+                earnContainer.innerHTML = currentUser.earnings.map(e => `<div class="bg-slate-900 p-1.5 rounded flex justify-between"><span>${e.desc}</span><span class="text-emerald-400">+${e.amount} MT</span></div>`).join('') || '<p class="text-slate-500">Sem extrato.</p>';
+            }
+        }
+
+        function renderInvestmentPlans() {
+            const tbody = document.getElementById('investmentTableBody');
+            tbody.innerHTML = investmentPlans.map(p => `
+                <tr class="hover:bg-slate-950/50">
+                    <td class="p-1.5 font-bold text-white border-r border-slate-800/60">${p.name}</td>
+                    <td class="p-1.5 border-r border-slate-800/60">${p.min} MT</td>
+                    <td class="p-1.5 border-r border-slate-800/60">${p.duration}</td>
+                    <td class="p-1.5 text-emerald-400 border-r border-slate-800/60">+${p.daily}</td>
+                    <td class="p-1.5 font-bold text-emerald-400">${p.total} MT</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderGallery() {
+            const grid = document.getElementById('photoGalleryGrid');
+            grid.innerHTML = galleryPhotos.map(photo => `
+                <div class="relative rounded-xl overflow-hidden border border-slate-800 group aspect-square">
+                    <img src="${photo.url}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent flex items-end p-1.5">
+                        <button onclick="likePhoto(${photo.id})" class="w-full bg-rose-600/90 hover:bg-rose-500 text-white py-1 rounded-lg text-[10px] font-bold flex items-center justify-center space-x-1 cursor-pointer shadow">
+                            <i class="fa-solid fa-heart"></i> <span>Like (Recompensa)</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function likePhoto(id) {
+            if(!currentUser) return;
+            currentUser.likesCount = (currentUser.likesCount || 0) + 1;
+            if(currentUser.likesCount > 10) {
+                alert('Atingiu o limite de 10 likes diários nas fotos!');
+                return;
+            }
+
+            let reward = 10;
+            if(currentUser.depositBalance > 0) {
+                reward = 10 + (currentUser.depositBalance * 0.05);
+            }
+
+            currentUser.balance += reward;
+            currentUser.earnings.push({ desc: 'Recompensa Like Foto', amount: reward });
+            saveUserData();
+            updateUserDataUI();
+            alert(`Ganhou ${reward.toFixed(2)} MT pelo Like na foto!`);
+        }
+
+        function copyRefLink() {
+            const copyText = document.getElementById('refLink');
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert('Link de convite copiado!');
+        }
+
+        // ================= PLINKO =================
+        let plinkoCtx, plinkoCanvas;
+        function initPlinkoCanvas() {
+            plinkoCanvas = document.getElementById('plinkoCanvas');
+            if(!plinkoCanvas) return;
+            plinkoCtx = plinkoCanvas.getContext('2d');
+            drawPlinkoBoard();
+        }
+
+        function setPlinkoBet(val) { document.getElementById('plinkoBetInput').value = val; }
+
+        function drawPlinkoBoard(ballX = 120, ballY = 20) {
+            if(!plinkoCtx) return;
+            plinkoCtx.clearRect(0, 0, plinkoCanvas.width, plinkoCanvas.height);
+
+            plinkoCtx.fillStyle = '#ffffff';
+            let rows = 8;
+            let startY = 30;
+            let spacingY = 28;
+            let colWidth = plinkoCanvas.width / 11;
+
+            for(let r = 0; r < rows; r++) {
+                let cols = r + 2;
+                let startX = plinkoCanvas.width / 2 - ((cols - 1) * colWidth) / 2;
+                for(let c = 0; c < cols; c++) {
+                    plinkoCtx.beginPath();
+                    plinkoCtx.arc(startX + c * colWidth, startY + r * spacingY, 3, 0, Math.PI * 2);
+                    plinkoCtx.fill();
+                }
+            }
+
+            const multipliers = [5, 3, 2, 1, 0.5, 0.2, 0.1, 0.5, 1, 2, 3, 5];
+            const colors = ['#dc2626', '#ea580c', '#f59e0b', '#eab308', '#64748b', '#475569', '#475569', '#64748b', '#eab308', '#f59e0b', '#ea580c', '#dc2626'];
+            let boxY = plinkoCanvas.height - 28;
+            let slotWidth = plinkoCanvas.width / multipliers.length;
+
+            multipliers.forEach((m, idx) => {
+                plinkoCtx.fillStyle = colors[idx];
+                plinkoCtx.fillRect(idx * slotWidth + 1, boxY, slotWidth - 2, 24);
+                plinkoCtx.fillStyle = '#ffffff';
+                plinkoCtx.font = 'bold 7px sans-serif';
+                plinkoCtx.textAlign = 'center';
+                plinkoCtx.fillText(`${m}x`, idx * slotWidth + slotWidth / 2, boxY + 15);
+            });
+
+            if(ballX !== null && ballY !== null) {
+                plinkoCtx.beginPath();
+                plinkoCtx.arc(ballX, ballY, 5.5, 0, Math.PI * 2);
+                plinkoCtx.fillStyle = '#34d399';
+                plinkoCtx.fill();
+            }
+        }
+
+        function playPlinko() {
+            if(!currentUser) return;
+            let bet = parseFloat(document.getElementById('plinkoBetInput').value);
+
+            if(isNaN(bet) || bet < 5 || bet > 500) {
+                alert('A aposta deve estar entre 5 MT e 500 MT.');
+                return;
+            }
+
+            if(currentUser.balance < bet) {
+                alert('Saldo principal insuficiente para esta aposta!');
+                return;
+            }
+
+            currentUser.balance -= bet;
+            updateUserDataUI();
+
+            document.getElementById('plinkoBtn').disabled = true;
+            document.getElementById('plinkoResultMsg').innerText = 'A bola está a descer a pirâmide...';
+
+            const multipliersList = [5, 3, 2, 1, 0.5, 0.2, 0.1, 0.5, 1, 2, 3, 5];
+            let selectedMultiplier = 1;
+            let targetSlot = 3;
+            let slotWidth = plinkoCanvas.width / multipliersList.length;
+
+            if(adminPlinkoSetting === 'sequence') {
+                const probabilitySequence = [0.5, 0.5, 2, 0.1, 0.1, 5, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 2, 0.5];
+                selectedMultiplier = probabilitySequence[plinkoSequenceIndex % probabilitySequence.length];
+                plinkoSequenceIndex++;
+                localStorage.setItem('plinko_seq_idx', plinkoSequenceIndex);
+
+                targetSlot = multipliersList.indexOf(selectedMultiplier);
+                if(targetSlot === -1) targetSlot = 6;
+            } else if(adminPlinkoSetting === '5') {
+                selectedMultiplier = 5;
+                targetSlot = 0;
+            } else if(adminPlinkoSetting === '0.1') {
+                selectedMultiplier = 0.1;
+                targetSlot = 6;
+            } else {
+                targetSlot = Math.floor(Math.random() * multipliersList.length);
+                selectedMultiplier = multipliersList[targetSlot];
+            }
+
+            let startX = plinkoCanvas.width / 2;
+            let startY = 12;
+            let targetX = targetSlot * slotWidth + (slotWidth / 2);
+            let targetY = plinkoCanvas.height - 14;
+            let progress = 0;
+
+            let animInterval = setInterval(() => {
+                progress += 0.012; 
+                let currentX = startX + (targetX - startX) * progress + Math.sin(progress * Math.PI * 6) * 12;
+                let currentY = startY + (targetY - startY) * progress;
+
+                drawPlinkoBoard(currentX, currentY);
+
+                if(progress >= 1) {
+                    clearInterval(animInterval);
+                    drawPlinkoBoard(targetX, targetY);
+
+                    let winnings = bet * selectedMultiplier;
+                    currentUser.balance += winnings;
+                    currentUser.earnings.push({ desc: `Plinko (${selectedMultiplier}x)`, amount: winnings });
+                    saveUserData();
+                    updateUserDataUI();
+
+                    let msgEl = document.getElementById('plinkoResultMsg');
+                    if(selectedMultiplier >= 1) {
+                        msgEl.className = 'text-[10px] font-bold text-emerald-400';
+                        msgEl.innerText = `Ganhou ${winnings.toFixed(2)} MT!`;
+                    } else {
+                        msgEl.className = 'text-[10px] font-bold text-rose-400';
+                        msgEl.innerText = `Caiu na slot ${selectedMultiplier}x.`;
+                    }
+
+                    document.getElementById('plinkoBtn').disabled = false;
+                }
+            }, 35);
+        }
+
+        // ================= ROLETA DA SORTE =================
+        let wheelCtx, wheelCanvas;
+        const wheelSlices = [
+            { text: '', value: 0, color: '#475569' },
+            { text: '', value: 5, color: '#3b82f6' },
+            { text: '', value: 1500, color: '#eab308' },
+            { text: '', value: 2, color: '#ec4899' },
+            { text: '', value: 10, color: '#10b981' },
+            { text: '', value: 1, color: '#6366f1' },
+            { text: '', value: 5000, color: '#f59e0b' },
+            { text: '', value: 50, color: '#14b8a6' }
+        ];
+        let currentWheelAngle = 0;
+
+        function initWheelCanvas() {
+            wheelCanvas = document.getElementById('wheelCanvas');
+            if(!wheelCanvas) return;
+            wheelCtx = wheelCanvas.getContext('2d');
+            drawWheel(0);
+        }
+
+        function drawWheel(angle) {
+            if(!wheelCtx) return;
+            const numSlices = wheelSlices.length;
+            const arcSize = (2 * Math.PI) / numSlices;
+            const center = wheelCanvas.width / 2;
+            const radius = center - 10;
+
+            wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
+            wheelCtx.save();
+            wheelCtx.translate(center, center);
+            wheelCtx.rotate(angle);
+
+            for (let i = 0; i < numSlices; i++) {
+                const startAngle = i * arcSize;
+                const endAngle = (i + 1) * arcSize;
+
+                wheelCtx.beginPath();
+                wheelCtx.moveTo(0, 0);
+                wheelCtx.arc(0, 0, radius, startAngle, endAngle);
+                wheelCtx.closePath();
+
+                wheelCtx.fillStyle = wheelSlices[i].color;
+                wheelCtx.fill();
+                wheelCtx.strokeStyle = '#020617';
+                wheelCtx.lineWidth = 2;
+                wheelCtx.stroke();
+            }
+
+            wheelCtx.restore();
+
+            // Círculo central
+            wheelCtx.beginPath();
+            wheelCtx.arc(center, center, 15, 0, 2 * Math.PI);
+            wheelCtx.fillStyle = '#0f172a';
+            wheelCtx.fill();
+            wheelCtx.strokeStyle = '#34d399';
+            wheelCtx.lineWidth = 2;
+            wheelCtx.stroke();
+        }
+
+        function spinLuckyWheel() {
+            if(!currentUser) return;
+            const cost = 10;
+
+            if(currentUser.balance < cost) {
+                alert('Saldo principal insuficiente para rodar a roleta (Mínimo 10 MT)!');
+                openDepositModal(10);
+                return;
+            }
+
+            currentUser.balance -= cost;
+            updateUserDataUI();
+
+            document.getElementById('wheelSpinBtn').disabled = true;
+            document.getElementById('wheelResultMsg').innerText = 'A roleta está a rodar...';
+
+            let targetSliceIndex = 1;
+            let seqIdx = parseInt(localStorage.getItem('wheel_seq_idx') || '0');
+
+            if(adminWheelSetting === 'sequence') {
+                let wheelSeq = [1, 3, 3, 3, 7, 4, 1, 2, 5, 0];
+                targetSliceIndex = wheelSeq[seqIdx % wheelSeq.length];
+                seqIdx++;
+                localStorage.setItem('wheel_seq_idx', seqIdx);
+            } else if(adminWheelSetting === 'big') {
+                const bigPrizes = [2, 6, 7, 4];
+                targetSliceIndex = bigPrizes[Math.floor(Math.random() * bigPrizes.length)];
+            } else if(adminWheelSetting === 'loss') {
+                targetSliceIndex = 0;
+            } else {
+                targetSliceIndex = Math.floor(Math.random() * wheelSlices.length);
+            }
+
+            const numSlices = wheelSlices.length;
+            const arcSize = (2 * Math.PI) / numSlices;
+            let targetAngle = (numSlices - targetSliceIndex) * arcSize - (arcSize / 2);
+            let totalSpin = currentWheelAngle + (Math.PI * 2 * 6) + targetAngle;
+            let duration = 3500;
+            let start = null;
+
+            function animateWheel(timestamp) {
+                if(!start) start = timestamp;
+                let progress = timestamp - start;
+                let percent = Math.min(progress / duration, 1);
+                let ease = 1 - Math.pow(1 - percent, 3);
+
+                let currentAngle = currentWheelAngle + (totalSpin - currentWheelAngle) * ease;
+                drawWheel(currentAngle);
+
+                if(percent < 1) {
+                    requestAnimationFrame(animateWheel);
+                } else {
+                    currentWheelAngle = totalSpin % (2 * Math.PI);
+                    let prizeValue = wheelSlices[targetSliceIndex].value;
+
+                    if(prizeValue > 0) {
+                        currentUser.balance += prizeValue;
+                        currentUser.earnings.push({ desc: `Roleta da Sorte (${prizeValue} MT)`, amount: prizeValue });
+                        document.getElementById('wheelResultMsg').className = 'text-[10px] font-bold text-emerald-400';
+                        document.getElementById('wheelResultMsg').innerText = `Parabéns! Ganhou ${prizeValue} MT!`;
+                    } else {
+                        document.getElementById('wheelResultMsg').className = 'text-[10px] font-bold text-rose-400';
+                        document.getElementById('wheelResultMsg').innerText = 'Não foi desta vez! Tente novamente.';
+                    }
+
+                    saveUserData();
+                    updateUserDataUI();
+                    document.getElementById('wheelSpinBtn').disabled = false;
+                }
+            }
+
+            requestAnimationFrame(animateWheel);
+        }
+
+        // ================= GESTÃO ADMIN =================
+        function loadAdminData() {
+            let users = JSON.parse(localStorage.getItem('girassol_users')) || {};
+            let allDeposits = [];
+            let allWithdraws = [];
+
+            document.getElementById('adminMpesaInput').value = adminDepositNums.mpesa;
+            document.getElementById('adminEmolaInput').value = adminDepositNums.emola;
+
+            const usersListEl = document.getElementById('adminUsersList');
+            usersListEl.innerHTML = Object.values(users).map(u => `
+                <div class="bg-slate-950 p-2 rounded flex justify-between items-center text-[10px]">
+                    <span><b>${u.name}</b> (+258 ${u.phone})</span>
+                    <span class="text-emerald-400 font-bold">${u.balance.toFixed(2)} MT</span>
+                </div>
+            `).join('') || '<p class="text-slate-500">Nenhum utilizador registado.</p>';
+
+            Object.values(users).forEach(u => {
+                if(u.deposits) u.deposits.forEach(d => allDeposits.push({...d, phone: u.phone}));
+                if(u.withdraws) u.withdraws.forEach(w => allWithdraws.push({...w, phone: u.phone}));
+            });
+
+            const depList = document.getElementById('adminDepositList');
+            depList.innerHTML = allDeposits.map(d => `
+                <div class="bg-slate-950 p-2 rounded flex justify-between items-center text-[10px]">
+                    <span><b>${d.phone}</b>: ${d.amount} MT (${d.status})</span>
+                    ${d.status === 'Pendente' ? `
+                        <div class="flex space-x-1">
+                            <button onclick="handleAdminDeposit('${d.phone}', ${d.id}, 'Aprovado')" class="bg-emerald-600 text-white px-2 py-0.5 rounded font-bold cursor-pointer">Aprovar</button>
+                            <button onclick="handleAdminDeposit('${d.phone}', ${d.id}, 'Rejeitado')" class="bg-rose-600 text-white px-2 py-0.5 rounded font-bold cursor-pointer">Rejeitar</button>
+                        </div>
+                    ` : `<span class="${d.status === 'Aprovado' ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${d.status}</span>`}
+                </div>
+            `).join('') || '<p class="text-slate-500">Sem depósitos.</p>';
+
+            const witList = document.getElementById('adminWithdrawList');
+            witList.innerHTML = allWithdraws.map(w => `
+                <div class="bg-slate-950 p-2 rounded flex justify-between items-center text-[10px]">
+                    <span><b>${w.phone}</b>: ${w.amount} MT (${w.status})</span>
+                    ${w.status === 'Pendente' ? `
+                        <div class="flex space-x-1">
+                            <button onclick="handleAdminWithdraw('${w.phone}', ${w.id}, 'Concluído')" class="bg-cyan-600 text-slate-950 px-2 py-0.5 rounded font-bold cursor-pointer">Aprovar</button>
+                            <button onclick="handleAdminWithdraw('${w.phone}', ${w.id}, 'Rejeitado')" class="bg-rose-600 text-white px-2 py-0.5 rounded font-bold cursor-pointer">Rejeitar</button>
+                        </div>
+                    ` : `<span class="${w.status === 'Concluído' ? 'text-cyan-400' : 'text-rose-400'} font-semibold">${w.status}</span>`}
+                </div>
+            `).join('') || '<p class="text-slate-500">Sem levantamentos.</p>';
+
+            renderAdminPlansTable();
+            document.getElementById('adminPlinkoMode').value = adminPlinkoSetting;
+            document.getElementById('adminWheelMode').value = adminWheelSetting;
+        }
+
+        function saveAdminDepositNumbers() {
+            const mpesa = document.getElementById('adminMpesaInput').value.trim();
+            const emola = document.getElementById('adminEmolaInput').value.trim();
+            if(!mpesa || !emola) {
+                alert('Preencha ambos os números!');
+                return;
+            }
+            adminDepositNums = { mpesa, emola };
+            localStorage.setItem('girassol_deposit_nums', JSON.stringify(adminDepositNums));
+            updateDepositNumbersUI();
+            alert('Números oficiais de depósito atualizados com sucesso!');
+        }
+
+        function renderAdminPlansTable() {
+            const tbody = document.getElementById('adminPlansTableBody');
+            tbody.innerHTML = investmentPlans.map(p => `
+                <tr class="hover:bg-slate-950/50">
+                    <td class="p-1.5 font-bold text-white">${p.name}</td>
+                    <td class="p-1.5">${p.min} MT</td>
+                    <td class="p-1.5">${p.duration}</td>
+                    <td class="p-1.5 text-emerald-400">+${p.daily} MT</td>
+                    <td class="p-1.5 font-bold text-emerald-400">${p.total} MT</td>
+                    <td class="p-1.5 text-center space-x-1">
+                        <button onclick="openEditPlanModal(${p.id})" class="bg-cyan-600 text-slate-950 px-1.5 py-0.5 rounded font-bold cursor-pointer">Editar</button>
+                        <button onclick="deletePlan(${p.id})" class="bg-rose-600 text-white px-1.5 py-0.5 rounded font-bold cursor-pointer">Excluir</button>
+                    </td>
+                </tr>
+            `).join('') || '<tr><td colspan="6" class="p-2 text-center text-slate-500">Nenhum plano registado.</td></tr>';
+        }
+
+        function openAddPlanModal() {
+            document.getElementById('planModalTitle').innerHTML = '<i class="fa-solid fa-chart-line text-emerald-400 mr-2"></i> Adicionar Plano de Investimento';
+            document.getElementById('editPlanId').value = '';
+            document.getElementById('planNameInput').value = '';
+            document.getElementById('planMinInput').value = '';
+            document.getElementById('planDurationInput').value = '';
+            document.getElementById('planDailyInput').value = '';
+            document.getElementById('planTotalInput').value = '';
+            document.getElementById('planModal').classList.remove('hidden');
+        }
+
+        function openEditPlanModal(id) {
+            const plan = investmentPlans.find(p => p.id === id);
+            if(!plan) return;
+            document.getElementById('planModalTitle').innerHTML = '<i class="fa-solid fa-chart-line text-cyan-400 mr-2"></i> Editar Plano de Investimento';
+            document.getElementById('editPlanId').value = plan.id;
+            document.getElementById('planNameInput').value = plan.name;
+            document.getElementById('planMinInput').value = plan.min;
+            document.getElementById('planDurationInput').value = plan.duration;
+            document.getElementById('planDailyInput').value = plan.daily;
+            document.getElementById('planTotalInput').value = plan.total;
+            document.getElementById('planModal').classList.remove('hidden');
+        }
+
+        function closePlanModal() {
+            document.getElementById('planModal').classList.add('hidden');
+        }
+
+        function saveInvestmentPlan() {
+            const id = document.getElementById('editPlanId').value;
+            const name = document.getElementById('planNameInput').value.trim();
+            const min = parseFloat(document.getElementById('planMinInput').value);
+            const duration = document.getElementById('planDurationInput').value.trim();
+            const daily = parseFloat(document.getElementById('planDailyInput').value);
+            const total = parseFloat(document.getElementById('planTotalInput').value);
+
+            if(!name || isNaN(min) || !duration || isNaN(daily) || isNaN(total)) {
+                alert('Preencha todos os campos corretamente.');
+                return;
+            }
+
+            if(id) {
+                let plan = investmentPlans.find(p => p.id == id);
+                if(plan) {
+                    plan.name = name;
+                    plan.min = min;
+                    plan.duration = duration;
+                    plan.daily = daily;
+                    plan.total = total;
+                }
+            } else {
+                const newId = investmentPlans.length > 0 ? Math.max(...investmentPlans.map(p => p.id)) + 1 : 1;
+                investmentPlans.push({ id: newId, name, min, duration, daily, total });
+            }
+
+            localStorage.setItem('girassol_investment_plans', JSON.stringify(investmentPlans));
+            closePlanModal();
+            renderInvestmentPlans();
+            loadAdminData();
+            alert('Plano guardado com sucesso!');
+        }
+
+        function deletePlan(id) {
+            if(confirm('Tem certeza que deseja excluir este plano de investimento?')) {
+                investmentPlans = investmentPlans.filter(p => p.id !== id);
+                localStorage.setItem('girassol_investment_plans', JSON.stringify(investmentPlans));
+                renderInvestmentPlans();
+                loadAdminData();
+            }
+        }
+
+        function updateAdminPlinkoSetting() {
+            adminPlinkoSetting = document.getElementById('adminPlinkoMode').value;
+            localStorage.setItem('admin_plinko_setting', adminPlinkoSetting);
+        }
+
+        function updateAdminWheelSetting() {
+            adminWheelSetting = document.getElementById('adminWheelMode').value;
+            localStorage.setItem('admin_wheel_setting', adminWheelSetting);
+        }
+
+        function handleAdminDeposit(phone, depositId, status) {
+            let users = JSON.parse(localStorage.getItem('girassol_users')) || {};
+            if(users[phone]) {
+                let dep = users[phone].deposits.find(d => d.id === depositId);
+                if(dep && dep.status === 'Pendente') {
+                    dep.status = status;
+                    if(status === 'Aprovado') {
+                        // Crédito automático no Saldo Principal e no Saldo de Depósito
+                        users[phone].balance += dep.amount;
+                        users[phone].depositBalance = (users[phone].depositBalance || 0) + dep.amount;
+                        users[phone].earnings.push({ desc: `Depósito Aprovado`, amount: dep.amount });
+                        
+                        // Se o utilizador atual logado for o mesmo, atualiza também a sessão ativa
+                        if(currentUser && currentUser.phone === phone) {
+                            currentUser = users[phone];
+                            localStorage.setItem('girassol_current_user', JSON.stringify(currentUser));
+                            updateUserDataUI();
+                        }
+                    }
+                    localStorage.setItem('girassol_users', JSON.stringify(users));
+                    alert(`Depósito ${status.toLowerCase()} com sucesso! O valor foi creditado automaticamente.`);
+                    loadAdminData();
+                }
+            }
+        }
+
+        function handleAdminWithdraw(phone, withdrawId, status) {
+            let users = JSON.parse(localStorage.getItem('girassol_users')) || {};
+            if(users[phone]) {
+                let wit = users[phone].withdraws.find(w => w.id === withdrawId);
+                if(wit && wit.status === 'Pendente') {
+                    wit.status = status;
+                    if(status === 'Rejeitado') {
+                        users[phone].balance += wit.amount;
+                    }
+                    localStorage.setItem('girassol_users', JSON.stringify(users));
+                    alert(`Levantamento ${status.toLowerCase()} com sucesso!`);
+                    loadAdminData();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
